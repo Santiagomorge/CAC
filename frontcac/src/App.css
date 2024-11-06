@@ -2,21 +2,21 @@ body {
   background-color: #F0F0F0;
 }
 
-/* App.css */
+
 .app-container {
   display: grid;
-  grid-template-rows: auto 1fr; /* Header ocupa la primera fila, el contenido la segunda */
-  grid-template-columns: 250px 1fr; /* Sidebar con ancho fijo, contenido ajustable */
-  height: 100vh; /* Toda la altura de la pantalla */
+  grid-template-rows: auto 1fr; 
+  grid-template-columns: 250px 1fr; 
+  height: 100vh; 
 }
 
-/* Header ocupa toda la primera fila */
+
 .app-container > .header {
-  grid-column: 1 / -1; /* Ocupa ambas columnas */
+  grid-column: 1 / -1; 
   grid-row: 1;
 }
 
-/* Index ocupa la primera columna y la segunda fila */
+
 .app-container > .index {
   grid-column: 1;
   grid-row: 2;
@@ -27,11 +27,10 @@ body {
   align-items: center;
 }
 
-/* Usuario ocupa el espacio restante a la derecha */
 .app-container > .usuario {
   grid-column: 2;
   grid-row: 2;
-  padding: 20px; /* Espacio para el contenido */
+  padding: 20px; 
 }
 
 .card{
@@ -75,4 +74,38 @@ body {
 
 .header-container {
   margin: 1%;
+}
+
+.Titulo-texto{
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #000000;
+  text-align: left;
+}
+
+th {
+  background-color: #D9D9D9;
+  font-style: bold;
+}
+
+button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
