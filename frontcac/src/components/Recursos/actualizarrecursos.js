@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 export const ActualizarRecurso = () => {
     const [formData, setFormData] = useState({
+        id: '',
         fechaCreacion: '',
         fechaActualizacion: '',
         estadoRegistro: '',
@@ -52,29 +53,29 @@ export const ActualizarRecurso = () => {
             <p class="Titulo-texto">Actualizar recurso</p>
           
           <form onSubmit={handleSubmit}>
+            <label>ID:
+              <input type="text" name="id" value={formData.id} onChange={handleChange} required />
+            </label>
             <label>Fecha creación:
               <input type="datetime-local" name="fechaCreacion" value={formData.fechaCreacion} onChange={handleChange} required />
             </label>
             <label>Fecha actualización:
-              <input type="text" name="employee_id" value={formData.employee_id} onChange={handleChange} required />
+              <input type="datetime-local" name="fechaActualizacion" value={formData.fechaActualizacion} onChange={handleChange} required />
             </label>
             <label>Estado:
-              <select name="estadoEnum" value={formData.estadoEnum} onChange={handleChange} required>
+              <select name="estadoRegistro" value={formData.estadoRegistro} onChange={handleChange} required>
                 <option value="">Seleccione</option>
                 <option value="ACTIVO">ACTIVO</option>
                 <option value="INACTIVO">INACTIVO</option>
               </select>
             </label>
-            <label>Contraseña:
-              <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <label>Nombre:
+              <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
             </label>
-            <label>Username:
-              <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+            <label>Cantidad:
+              <input type="number" name="cantidad" value={formData.cantidad} onChange={handleChange} required />
             </label>
-            <label>Rol ID:
-              <input type="text" name="rol" value={formData.rol} onChange={handleChange} required />
-            </label>
-            <button type="submit">Actualizar Usuario</button>
+            <button type="submit">Actualizar recurso</button>
           </form>
         </div>
     );
