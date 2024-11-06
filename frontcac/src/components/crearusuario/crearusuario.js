@@ -43,7 +43,7 @@ export const CrearUsuario = () => {
           })
           .then((data) => {
             console.log('Usuario creado:', data);
-            navigate('/listarusuarios'); // Redirige a la lista de usuarios tras crear el usuario
+            navigate('/');
           })
           .catch((error) => console.error('Error:', error));
       };

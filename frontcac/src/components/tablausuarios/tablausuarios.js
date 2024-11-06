@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import { useNavigate } from "react-router-dom";
 import '../../App.css';  
 import IrCrearUsuario from "../botoncrearusuario";
+import IrActUsuario from "../botonactualizarusuario";
 
 
 export const TablaUsuarios = () => {
@@ -62,7 +63,7 @@ const actualizarUsuario = (id) => {
               <td>{usuario.username}</td>
               <td>{usuario.rol.name}</td>
               <td>
-                <button className="header-button" onClick={() => actualizarUsuario(usuario.id)}>Actualizar</button>
+              <IrActUsuario />
               </td>
               <td>{usuario.estadoEnum}</td>
             </tr>

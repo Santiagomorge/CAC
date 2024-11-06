@@ -1,5 +1,4 @@
 package cetus.com.microservices.usuario.config;
-
 import cetus.com.microservices.usuario.business.map.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
@@ -12,4 +11,7 @@ public class MapperConfig {
     public UserMapper userMapper() {
         return Mappers.getMapper(UserMapper.class);
     }
+
+
+
 }
