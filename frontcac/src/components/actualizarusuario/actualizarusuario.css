@@ -23,6 +23,8 @@ form {
   }
   
   input[type="text"],
+  input[type="datetime-local"],
+  input[type="number"],
   input[type="password"],
   select {
 

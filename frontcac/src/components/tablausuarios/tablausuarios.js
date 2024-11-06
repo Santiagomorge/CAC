@@ -25,22 +25,6 @@ export const TablaUsuarios = () => {
           .catch((error) => console.error('Error al cargar usuarios:', error));
     }, []);
 
-    // Función para actualizar usuario
-const actualizarUsuario = (id) => {
-    // Lógica para actualizar el usuario (puede ser redirigir a un formulario o abrir un modal)
-    console.log(`Actualizar usuario con ID: ${id}`);
-  };
-  
-  // Función para activar o inactivar usuario
-  const activarInactivarUsuario = (id) => {
-    // Puedes enviar una solicitud al backend para cambiar el estado activo del usuario
-    console.log(`Activar/Inactivar usuario con ID: ${id}`);
-    // Aquí deberías hacer una llamada al backend para actualizar el estado del usuario
-  };
-
-
-  
-
     
     return <div >
       <br></br>

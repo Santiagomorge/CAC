@@ -6,6 +6,9 @@ import { ActualizarUsuario } from './components/actualizarusuario/actualizarusua
 import { Header } from './components/header/header';
 import { Usuarios } from './components/usuarios/usuarios';
 import { Index } from './components/index';
+import { TablaRecursos } from './components/Recursos/tablarecursos';
+import { CrearRecurso } from './components/Recursos/crearrecurso';
+import { ActualizarRecurso } from './components/Recursos/actualizarrecursos';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
           <Route exact path="/" element={<Usuarios/>}/>
           <Route exact path="/crearusuarios" element={<CrearUsuario/>} />
           <Route exact path="/Actusuarios" element={<ActualizarUsuario />} />
+          <Route exact path="/recursos" element={<TablaRecursos/>} />
+          <Route exact path="/crearrecursos" element={<CrearRecurso/>} />
+          <Route exact path="/Actrecursos" element={<ActualizarRecurso/>} />
         </Routes>
       </Router>
         
