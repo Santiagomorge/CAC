@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+body {
+  background-color: #F0F0F0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* App.css */
+.app-container {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Header ocupa la primera fila, el contenido la segunda */
+  grid-template-columns: 250px 1fr; /* Sidebar con ancho fijo, contenido ajustable */
+  height: 100vh; /* Toda la altura de la pantalla */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Header ocupa toda la primera fila */
+.app-container > .header {
+  grid-column: 1 / -1; /* Ocupa ambas columnas */
+  grid-row: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Index ocupa la primera columna y la segunda fila */
+.app-container > .index {
+  grid-column: 1;
+  grid-row: 2;
+  background-color: #42423F;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+/* Usuario ocupa el espacio restante a la derecha */
+.app-container > .usuario {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 20px; /* Espacio para el contenido */
+}
+
+.card{
+
+  color: white;
+  font-size: 1.5rem;
+  margin: 5%;
+  text-decoration: none;
+}
+
+.app-header{
+  background-color: #F19123;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo {
+  height: 12vmin;
+  pointer-events: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header-button{
+  display: flex; 
+  align-items: center; 
+  padding: 10px 10px; 
+  font-size: 16px; 
+  background-color: #42423F; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer;
+}
+
+.header-button i {
+  margin: 10px;
+}
+
+.header-container {
+  margin: 1%;
 }
