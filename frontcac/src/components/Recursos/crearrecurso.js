@@ -48,7 +48,7 @@ export const CrearRecurso = () => {
 
   return (
     <div>
-      <p className="Titulo-texto">Crear recurso</p>
+      <p className="Titulo-texto">Crear compañía</p>
       <form onSubmit={handleSubmit}>
         <label>Fecha creación:
           <input type="datetime-local" name="fechaCreacion" value={formData.fechaCreacion} onChange={handleChange} required />

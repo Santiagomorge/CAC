@@ -34,11 +34,24 @@ body {
 }
 
 .card{
-
+  background: none;         /* Sin fondo */
+  border: none;             /* Sin borde */
+  color: inherit;           /* Usa el color del texto de su contexto */
+  font: inherit;            /* Usa la fuente del contenedor */
+  cursor: pointer;          /* Para indicar que es clickeable */
+  padding: 0;               /* Sin relleno */
   color: white;
   font-size: 1.5rem;
   margin: 5%;
   text-decoration: none;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  background: none;         /* Sin fondo al hacer hover, focus o active */
+  color: inherit;           /* Mantener el color sin cambio */
+  outline: none;            /* Sin borde o sombra de enfoque */
 }
 
 .app-header{

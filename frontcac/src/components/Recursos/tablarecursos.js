@@ -27,6 +27,7 @@ export const TablaRecursos = () => {
 
   return (
     <div class="usuario">
+      <p class="Titulo-texto">Listar recursos</p>
       <br />
       <IrCrearRecurso />
       <br />

@@ -15,7 +15,7 @@ function App() {
     <div className="app-container">
       <Header />
       <Index />
-      <Router>
+      
         <Routes>
           <Route exact path="/" element={<Usuarios/>}/>
           <Route exact path="/crearusuarios" element={<CrearUsuario/>} />
@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/crearrecursos" element={<CrearRecurso/>} />
           <Route exact path="/Actrecursos" element={<ActualizarRecurso/>} />
         </Routes>
-      </Router>
+      
         
     </div>
   );
