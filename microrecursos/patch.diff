@@ -1,0 +1,146 @@
+diff --git a/.gitignore b/.gitignore
+index 90e86c3..9df2400 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -21,7 +21,6 @@ dist/
+ 
+ # Maven
+ target/
+-dist/
+ 
+ # JetBrains IDE
+ .idea/
+@@ -46,4 +45,5 @@ Thumbs.db
+ *.avi
+ *.flv
+ *.mov
+-*.wmv
+\ No newline at end of file
++*.wmv
++
+diff --git a/src/main/java/com/cac/compania/business/service/Impl/CompaniaServiceImpl.java b/src/main/java/com/cac/compania/business/service/Impl/CompaniaServiceImpl.java
+index f6a2f9d..ba854c9 100644
+--- a/src/main/java/com/cac/compania/business/service/Impl/CompaniaServiceImpl.java
++++ b/src/main/java/com/cac/compania/business/service/Impl/CompaniaServiceImpl.java
+@@ -44,6 +44,9 @@ public class CompaniaServiceImpl implements CompaniaService {
+                     compania.setNit(companiaActualizada.getNit());
+                     compania.setFecha_creacion(companiaActualizada.getFecha_creacion());
+                     compania.setFecha_actualizacion(companiaActualizada.getFecha_actualizacion());
++                    compania.setPropietario(companiaActualizada.getPropietario());
++                    compania.setTelefono(companiaActualizada.getTelefono()
++                    );
+                     return companiaRepository.save(compania);
+                 }).orElse(null);
+     }
+diff --git a/src/main/java/com/cac/compania/domain/dto/CompaniaDto.java b/src/main/java/com/cac/compania/domain/dto/CompaniaDto.java
+index c7030bc..5d95817 100644
+--- a/src/main/java/com/cac/compania/domain/dto/CompaniaDto.java
++++ b/src/main/java/com/cac/compania/domain/dto/CompaniaDto.java
+@@ -20,11 +20,11 @@ import java.util.List;
+ public class CompaniaDto {
+     @Id
+     int id;
+-    @NonNull
++
+     LocalDate fecha_creacion;
+-    @NonNull
++
+     LocalDate fecha_actualizacion;
+-    @NonNull
++
+     boolean estado_registro;
+     @NonNull
+     String nombre;
+@@ -38,7 +38,7 @@ public class CompaniaDto {
+     String telefono;
+     @NonNull
+     String email;
+-    @NonNull
++
+     boolean estado;
+     @OneToMany(cascade = CascadeType.ALL)
+     List<Dependencia> listaDependencias;
+diff --git a/src/main/java/com/cac/compania/presentation/controller/CompaniaController.java b/src/main/java/com/cac/compania/presentation/controller/CompaniaController.java
+index 77d8e7f..e43eca0 100644
+--- a/src/main/java/com/cac/compania/presentation/controller/CompaniaController.java
++++ b/src/main/java/com/cac/compania/presentation/controller/CompaniaController.java
+@@ -14,13 +14,13 @@ import java.util.List;
+ 
+ @RestController
+ @RequiredArgsConstructor
+-@RequestMapping("/companias")
++@RequestMapping("/compania")
+ @Tag(name = "Companias", description = "Operaciones relacionadas con companias")
+ public class CompaniaController {
+ 
+     private final CompaniaServiceImpl companiaServiceImpl;
+ 
+-    @GetMapping
++    @GetMapping("/listar")
+     @Operation(summary = "Obtener todas las compañias", description = "Devuelve una lista de todas las compañias.")
+     public List<Compania> ListarCompanias() {
+         return companiaServiceImpl.ListarCompanias();
+@@ -35,22 +35,21 @@ public class CompaniaController {
+                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+     }
+ 
+-
+-    @PostMapping
++    @PostMapping("/crear")
+     @Operation(summary = "crear compania", description = "Devuelve la confirmacion de la compania creada")
+     public ResponseEntity<CompaniaDto> CrearCompania(@RequestBody CompaniaDto companiaDto) {
+         CompaniaDto nuevaCompania = companiaServiceImpl.crearCompania(companiaDto);
+         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCompania);
+     }
+ 
+-    @PutMapping("/{id}")
++    @PutMapping("/actualizar/{id}")
+     @Operation(summary = "actualizar compania", description = "Devuelve la confirmacion compania existente actualizada")
+     public ResponseEntity<Compania> ActualizarCompania(@PathVariable Integer id, @RequestBody Compania compania) {
+         Compania companiaActualizada = companiaServiceImpl.actualizarCompania(id, compania);
+         return companiaActualizada != null ? ResponseEntity.ok(companiaActualizada) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+     }
+ 
+-    @DeleteMapping("/{id}")
++    @DeleteMapping("/eliminar/{id}")
+     @Operation(summary = "eliminar compania", description = "Devuelve la confirmacion de la compania eliminada")
+     public ResponseEntity<Void> EliminarCompania(@PathVariable Integer id) {
+         companiaServiceImpl.eliminarCompania(id);
+diff --git a/src/main/java/com/cac/compania/presentation/controller/EmpleadoController.java b/src/main/java/com/cac/compania/presentation/controller/EmpleadoController.java
+index 316e680..e4981b0 100644
+--- a/src/main/java/com/cac/compania/presentation/controller/EmpleadoController.java
++++ b/src/main/java/com/cac/compania/presentation/controller/EmpleadoController.java
+@@ -21,7 +21,7 @@ public class EmpleadoController {
+ 
+     private final EmpleadoServiceImpl empleadoServiceImpl;
+ 
+-    @GetMapping
++    @GetMapping("/listar")
+     @Operation(summary = "obtener dependencias", description = "Devuelve todas las dependencias registradas")
+     public List<Empleado> ListarCompanias() {
+         return empleadoServiceImpl.ListarEmpleados();
+@@ -37,21 +37,21 @@ public class EmpleadoController {
+     }
+ 
+ 
+-    @PostMapping
++    @PostMapping("/crear")
+     @Operation(summary = "crear empleado", description = "Devuelve la confirmacion del empleado creado")
+     public ResponseEntity<EmpleadoDto> CrearEmpleado(@RequestBody EmpleadoDto empleadoDto) {
+         EmpleadoDto nuevoEmpleado = empleadoServiceImpl.crearEmpleado(empleadoDto);
+         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEmpleado);
+     }
+ 
+-    @PutMapping("/{id}")
++    @PutMapping("/actualizar/{id}")
+     @Operation(summary = "actualizar empleado", description = "Devuelve la confirmacion de la actualizacion del empleado")
+     public ResponseEntity<Empleado> ActualizarEmpleado(@PathVariable Integer id, @RequestBody Empleado empleado) {
+         Empleado empleadoActualizado = empleadoServiceImpl.actualizarEmpleado(id, empleado);
+         return empleadoActualizado != null ? ResponseEntity.ok(empleadoActualizado) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+     }
+ 
+-    @DeleteMapping("/{id}")
++    @DeleteMapping("/eliminar/{id}")
+     @Operation(summary = "eliminar empleado", description = "Devuelve la confirmacion del empleado eliminado")
+     public ResponseEntity<Void> EliminarEmpleado(@PathVariable Integer id) {
+         empleadoServiceImpl.eliminarEmpleado(id);
