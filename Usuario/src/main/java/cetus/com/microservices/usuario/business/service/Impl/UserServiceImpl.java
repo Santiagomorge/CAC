@@ -122,4 +122,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public ResponseResult<String> getRoleByUsername(String username) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return new ResponseResult<>(HttpStatus.OK.value(),"Exito", user.getRol().getName());
+    }
+
+
 }

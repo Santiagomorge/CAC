@@ -63,4 +63,9 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getCode()));
     }
 
+    @GetMapping("/{username}/rol")
+    public ResponseEntity<ResponseResult<String>> getUserRole (@PathVariable String username) {
+        ResponseResult<String> result = userService.getRoleByUsername(username);
+        return new ResponseEntity<>(result, HttpStatus.valueOf(result.getCode()));
+    }
 }

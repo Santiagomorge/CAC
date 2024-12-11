@@ -36,5 +36,4 @@ public class UserEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private Role rol;
-
 }

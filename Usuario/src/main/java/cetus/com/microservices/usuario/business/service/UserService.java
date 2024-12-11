@@ -15,4 +15,5 @@ public interface UserService {
     ResponseResult<CreateUserDTO> updateUser(CreateUserDTO createUserDTO);
     ResponseResult<List<Role>> getRoles();
     ResponseResult<String> validateCredentials(LoginRequest loginRequest);
+    ResponseResult<String> getRoleByUsername(String username);
 }
