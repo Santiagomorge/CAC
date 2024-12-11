@@ -1,4 +1,9 @@
-
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: #42423f;
+  }
 /* elemento raíz de sign-in component  */
 :host {
 	display: grid;
@@ -568,10 +573,13 @@ a.link-recursos{
   
   /* Mensaje de error */
   .error-message {
-	color: #d13232;
-	font-size: 1.2rem;
-	background: #fde4e4;
-	padding: 10px;
+	color: #f19123;
+	font-size: 1rem;
 	border-radius: 5px;
-	margin-top: 20px;
+	margin-top: -10px;
+  }
+
+  button{
+	background-color: #333;
+	border-radius: 6px;
   }

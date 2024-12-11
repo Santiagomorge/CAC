@@ -11,6 +11,7 @@ export const SignInRecursos = () => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [userRole, setUserRole] = useState(""); // Para almacenar el rol del usuario
   const navigate = useNavigate();
 
   const validate = () => {
@@ -36,11 +37,12 @@ export const SignInRecursos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validate()) return;
-
+  
     setLoading(true);
     try {
+      // Intentamos hacer login
       const response = await fetch("http://localhost:8080/usuario/api/v1/users/login", {
         method: "POST",
         headers: {
@@ -48,10 +50,25 @@ export const SignInRecursos = () => {
         },
         body: JSON.stringify(formData)
       });
-
+  
       if (response.ok) {
         console.log("Login exitoso");
-        navigate("/vista-recursos");
+  
+        // Ahora obtenemos el rol del usuario
+        const roleResponse = await fetch(`http://localhost:8080/usuario/api/v1/users/${formData.username}/rol`);
+        
+        if (roleResponse.ok) {
+          const roleData = await roleResponse.json();
+          console.log("Role Data:", roleData); // Verifica el contenido de roleData
+  
+          // Modificar para acceder a roleData.data
+          setUserRole(roleData.data); // Guardamos el rol del usuario
+  
+          // Redirigimos al usuario a la vista de recursos y pasamos el rol
+          navigate("/vista-recursos", { state: { role: roleData.data } });
+        } else {
+          setErrors({ form: "Error al obtener el rol del usuario." });
+        }
       } else if (response.status === 401) {
         setErrors({ form: "Usuario o contraseña incorrectos." });
       } else {
@@ -64,76 +81,78 @@ export const SignInRecursos = () => {
       setLoading(false);
     }
   };
+  
+  
 
   return (
     <div className="login-contprin">
-    <div className="login-container">
-      <div className="box caja40">
-        <img
-          className="imagen-login"
-          src={room}
-          alt="fondo"
-        />
-      </div>
-      <div className="box caja60">
-        <img
-          className="logo-login"
-          src={logo_login}
-          alt="Logo de la empresa"
-        />
-        <p className="texto-login">Por favor inicia sesión con tus credenciales para acceder a una sala</p>
+      <div className="login-container">
+        <div className="box caja40">
+          <img
+            className="imagen-login"
+            src={room}
+            alt="fondo"
+          />
+        </div>
+        <div className="box caja60">
+          <img
+            className="logo-login"
+            src={logo_login}
+            alt="Logo de la empresa"
+          />
+          <p className="texto-login">Por favor inicia sesión con tus credenciales para acceder a una sala</p>
 
-        <form className="formlogin" onSubmit={handleSubmit}>
-          <div className="label-login">
-            <label htmlFor="username" className="input-login">
-              Usuario
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className={errors.username ? "input-error" : ""}
-            />
-            {errors.username && (
-              <div className="error-message">{errors.username}</div>
+          <form className="formlogin" onSubmit={handleSubmit}>
+            <div className="label-login">
+              <label htmlFor="username" className="input-login">
+                Usuario
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className={errors.username ? "input-error" : ""}
+              />
+              {errors.username && (
+                <div className="error-message">{errors.username}</div>
+              )}
+            </div>
+
+            <div className="label-login">
+              <label htmlFor="password" className="input-login">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={errors.password ? "input-error" : ""}
+              />
+              {errors.password && (
+                <div className="error-message">{errors.password}</div>
+              )}
+            </div>
+
+            {errors.form && (
+              <div className="error-message">{errors.form}</div>
             )}
+
+            <button type="submit" className="ingresar" disabled={loading}>
+              {loading ? "Cargando..." : "Ingresar"}
+            </button>
+          </form>
+
+          <div className="link-container">
+            <Link to="/" className="link-recursos">
+              Entrar a administrador
+            </Link>
           </div>
-
-          <div className="label-login">
-            <label htmlFor="password" className="input-login">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={errors.password ? "input-error" : ""}
-            />
-            {errors.password && (
-              <div className="error-message">{errors.password}</div>
-            )}
-          </div>
-
-          {errors.form && (
-            <div className="error-message">{errors.form}</div>
-          )}
-
-          <button type="submit" className="ingresar" disabled={loading}>
-            {loading ? "Cargando..." : "Ingresar"}
-          </button>
-        </form>
-
-        <div className="link-container">
-          <Link to="/" className="link-recursos">
-            Entrar a administrador
-          </Link>
         </div>
       </div>
     </div>
-  </div>
   );
 };
