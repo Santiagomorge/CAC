@@ -7,7 +7,7 @@ export const Index = () => {
     const navigate = useNavigate();
 
     const irUsuarios = () => {
-        navigate('/');
+        navigate('/usuarios');
     };
 
     const irRecursos = () => {

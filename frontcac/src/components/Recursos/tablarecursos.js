@@ -31,13 +31,14 @@ export const TablaRecursos = () => {
       <br />
       <IrCrearRecurso />
       <br />
+      <IrActRecurso />
+      <br />
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Nombre de Recurso</th>
             <th>Cantidad de recursos</th>
-            <th>Acción</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -48,7 +49,6 @@ export const TablaRecursos = () => {
                 <td>{recurso.id}</td>
                 <td>{recurso.nombre}</td>
                 <td>{recurso.cantidad}</td>
-                <td><IrActRecurso /></td>
                 <td>{recurso.estadoRegistro ? 'Activo' : 'Inactivo'}</td>
               </tr>
             ))

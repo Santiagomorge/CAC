@@ -1,6 +1,7 @@
 package cetus.com.microservices.usuario.business.map;
 
 import cetus.com.microservices.usuario.domain.dto.CreateUserDTO;
+import cetus.com.microservices.usuario.domain.dto.LoginRequest;
 import cetus.com.microservices.usuario.domain.dto.UserDTO;
 import cetus.com.microservices.usuario.domain.entity.Role;
 import cetus.com.microservices.usuario.domain.entity.UserEntity;
@@ -24,6 +25,9 @@ public interface UserMapper {
     void updateEntityFromDto(CreateUserDTO createUserDto, @MappingTarget UserEntity userEntity);
 
     UserDTO toUsuarioDto(UserEntity userEntity);
+
+    // Mapeo para la validación de usuario
+    UserEntity toUserEntityForValidation(LoginRequest validateUserDto);
 
 //    default Long map(Role role) {
 //        return role != null ? role.getId() : null;

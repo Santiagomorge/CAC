@@ -7,6 +7,7 @@ import cetus.com.microservices.usuario.common.UserNameExistsExeption;
 import cetus.com.microservices.usuario.domain.dto.CreateUserDTO;
 import cetus.com.microservices.usuario.domain.dto.ResponseResult;
 import cetus.com.microservices.usuario.domain.dto.UserDTO;
+import cetus.com.microservices.usuario.domain.dto.LoginRequest;
 import cetus.com.microservices.usuario.domain.entity.Role;
 import cetus.com.microservices.usuario.domain.entity.UserEntity;
 import cetus.com.microservices.usuario.persistence.RoleRepository;
@@ -56,19 +57,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<UserDTO> saveUser(CreateUserDTO createUserDTO) {
         try {
-            if(userRepository.existsByUsername(createUserDTO.getUsername())){
+            if (userRepository.existsByUsername(createUserDTO.getUsername())) {
                 throw new UserNameExistsExeption("El nombre de usuario no se encuentra disponible");
             }
 
             Role role = roleRepo.findById(createUserDTO.getRol())
-                    .orElseThrow( () -> new RoleNotFoundException("Rol con id " + createUserDTO.getRol() + " inválido"));
+                    .orElseThrow(() -> new RoleNotFoundException("Rol con id " + createUserDTO.getRol() + " inválido"));
             UserEntity userEntity = userMapper.ToUsuario(createUserDTO);
             userEntity.setRol(role);
             userRepository.save(userEntity);
 
             UserDTO dto = userMapper.toUsuarioDto(userEntity);
             return new ResponseResult<>(HttpStatus.CREATED.value(), "¡Usuario registrado con éxito!", dto);
-        } catch (UserNameExistsExeption e){
+        } catch (UserNameExistsExeption e) {
             return new ResponseResult<>(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
         } catch (Exception e) {
             return new ResponseResult<>(HttpStatus.BAD_REQUEST.value(), "Error al guardar el usuario, " + e.getMessage(), null);
@@ -97,4 +98,28 @@ public class UserServiceImpl implements UserService {
     public ResponseResult<List<Role>> getRoles() {
         return new ResponseResult<>(HttpStatus.OK.value(), "Lista de roles éxito", roleRepo.findAll());
     }
+
+    @Override
+    public ResponseResult<String> validateCredentials(LoginRequest loginRequest) {
+        try {
+            Optional<UserEntity> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+            if (userOpt.isPresent()) {
+                UserEntity user = userOpt.get();
+                if (user.getPassword().equals(loginRequest.getPassword())) {
+                    // Si las credenciales son válidas
+                    return new ResponseResult<>(HttpStatus.OK.value(), "Credenciales válidas", "Autenticación exitosa");
+                } else {
+                    // Contraseña incorrecta
+                    return new ResponseResult<>(HttpStatus.UNAUTHORIZED.value(), "Contraseña incorrecta", null);
+                }
+            } else {
+                // Usuario no encontrado
+                return new ResponseResult<>(HttpStatus.NOT_FOUND.value(), "Usuario no encontrado", null);
+            }
+        } catch (Exception e) {
+            // Manejo de errores
+            return new ResponseResult<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al validar credenciales, " + e.getMessage(), null);
+        }
+    }
+
 }
